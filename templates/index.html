@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Disaster Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Natural Disaster Management</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#disaster-info" class="nav-link">Disaster Information</a></li>
+                <li><a href="#preparedness-tips" class="nav-link">Preparedness Tips</a></li>
+                <li><a href="#contacts" class="nav-link">Emergency Contacts</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="#">Hello, {{ current_user.username }}!</a></li>
+                    <li>
+                        <form action="{{ url_for('logout') }}" method="POST" style="display:inline;">
+                            <button type="submit" class="logout-button">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <main>  
+        <section id="home">
+            <h2>Overview of Natural Disasters</h2>
+            <p>Stay informed and prepared to manage natural disasters effectively.</p>
+            <h3>Your Current Location</h3>
+            <div id="map" style="height: 400px; width: 100%;"></div> <!-- Map div -->
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="https://ndma.gov.in/" target="_blank">National Disaster Management Authority</a></li>
+                <li><a href="https://mausam.imd.gov.in/" target="_blank">India Meteorological Department</a></li>
+                <li><a href="https://www.mha.gov.in/" target="_blank">Ministry of Home Affairs</a></li>
+                <li><a href="https://www.nrsc.gov.in/" target="_blank">National Remote Sensing Centre (NRSC)</a></li>
+                <li><a href="https://www.incois.gov.in/" target="_blank">Indian National Centre for Ocean Information Services (INCOIS)</a></li>
+                <li><a href="https://www.indianredcross.org/" target="_blank">Indian Red Cross Society</a></li>
+            </ul>
+        </section>
+
+        <hr>
+        
+        <section id="disaster-info">
+            <h2>Disaster Information</h2>
+            <div class="disaster">
+                <img src="{{ url_for('static', filename='images/flood.jpeg') }}" alt="Flood Image">
+                <div>
+                    <h3>Floods</h3>
+                    <p>Floods are natural disasters caused by the overflow of water onto land that is usually dry.
+                    They can result from heavy rainfall, river overflow, melting snow, or dam breakage.
+                    Floods can cause widespread damage to property and infrastructure and lead to loss of life.</p>
+                </div>
+            </div>
+            <div class="disaster">
+                <img src="{{ url_for('static', filename='images/earthquake.jpg') }}" alt="Earthquake Image">
+                <div>
+                    <h3>Earthquakes</h3>
+                    <p>Earthquakes are sudden shaking or trembling of the ground caused by the shifting of Earth's tectonic plates.
+                    They can lead to significant destruction, especially in densely populated areas,
+                    causing buildings to collapse and triggering landslides or tsunamis.</p>
+                </div>
+            </div>
+            <div class="disaster">
+                <img src="{{ url_for('static', filename='images/hurricane.jpg') }}" alt="Hurricane Image">
+                <div>
+                    <h3>Hurricanes</h3>
+                    <p>Hurricanes are powerful tropical storms with strong winds and heavy rainfall. 
+                    They form over warm ocean waters and can cause severe damage through flooding, storm surges, and wind destruction.
+                    The impact of hurricanes can extend hundreds of miles inland.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        
+        <section id="preparedness-tips">
+            <h2>Preparedness Tips</h2>
+            <div class="tips">
+                <div class="tip-content">
+                    <div>
+                        <h3>Floods</h3>
+                        <ol>
+                            <li>Stay informed: Monitor weather updates and alerts.</li>
+                            <li>Prepare an emergency kit with essentials (food, water, medications).</li>
+                            <li>Elevate electrical appliances and important documents.</li>
+                            <li>Have an evacuation plan and know the nearest shelters.</li>
+                            <li>Avoid walking or driving through floodwaters.</li>
+                        </ol>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/flood.jpeg') }}" alt="Flood Image">
+                </div>
+            </div>
+            <div class="tips">
+                <div class="tip-content">
+                    <div>
+                        <h3>Earthquakes</h3>
+                        <ol>
+                            <li>Identify safe spots in each room (under sturdy furniture).</li>
+                            <li>Secure heavy furniture and objects to prevent them from falling.</li>
+                            <li>Prepare an emergency kit with essentials.</li>
+                            <li>Learn how to shut off gas, water, and electricity.</li>
+                            <li>Practice "Drop, Cover, and Hold On" drills regularly.</li>
+                        </ol>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/earthquake.jpg') }}" alt="Earthquake Image">
+                </div>
+            </div>
+            <div class="tips">
+                <div class="tip-content">
+                    <div>
+                        <h3>Hurricanes</h3>
+                        <ol>
+                            <li>Stay informed about the hurricane's path and potential impact.</li>
+                            <li>Secure your home by boarding up windows and reinforcing doors.</li>
+                            <li>Stock up on non-perishable food, water, and emergency supplies.</li>
+                            <li>Have a plan for evacuating if necessary.</li>
+                            <li>Avoid coastal areas and move to a higher elevation if required.</li>
+                        </ol>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/hurricane.jpg') }}" alt="Hurricane Image">
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        
+        <section id="contacts">
+            <h2>Emergency Contacts</h2>
+            <ul>
+                <li>National Emergency Number: 112</li>
+                <li>Police: 100</li>
+                <li>Fire: 101</li>
+                <li>Ambulance: 102</li>
+                <li>Disaster Management: 108</li>
+                <li>Women Helpline: 1091</li>
+            </ul>
+            <button onclick="makeCall('112')">Call Emergency</button>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Natural Disaster Management</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
